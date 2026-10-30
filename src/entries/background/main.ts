@@ -33,6 +33,25 @@ browser.contextMenus.onClicked.addListener((info) => {
 	});
 });
 
+browser.commands.onCommand.addListener((command) => {
+	switch (command) {
+		case "workspace-previous":
+		case "workspace-next": {
+			browser.windows.getCurrent().then((currentWindow) => {
+				if (!currentWindow.id) {
+					return;
+				}
+
+				app.switchWindowWorkspaceByOffset(
+					currentWindow.id,
+					command === "workspace-previous" ? -1 : 1,
+				);
+			});
+			break;
+		}
+	}
+});
+
 browser.tabs.onHighlighted.addListener(() => {
 	app.createContextMenu();
 });
