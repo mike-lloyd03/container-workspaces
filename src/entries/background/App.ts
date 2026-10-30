@@ -138,6 +138,25 @@ export class App {
 		this.createContextMenu();
 	}
 
+	switchWindowWorkspaceByOffset(windowId: number, offset: -1 | 1) {
+		browser.contextualIdentities.query({}).then((contextIds) => {
+			const workspaces: (string | null)[] = [
+				null,
+				"firefox-default",
+				...contextIds.map((contextId) => contextId.cookieStoreId),
+			];
+			this.switchWindowWorkspace(
+				windowId,
+				workspaces[
+					(workspaces.indexOf(this.windowWorkspaces.get(windowId) ?? null) +
+						offset +
+						workspaces.length) %
+						workspaces.length
+				],
+			);
+		});
+	}
+
 	moveSelectedTabsToWorkspace(cookieStoreId: string | null) {
 		browser.windows.getCurrent().then((currentWindow) => {
 			if (!currentWindow.id) {

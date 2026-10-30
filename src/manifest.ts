@@ -7,6 +7,22 @@ const sharedManifest: Partial<chrome.runtime.ManifestBase> = {
 			matches: ["*://*/*"],
 		},
 	],
+	commands: {
+		"workspace-previous": {
+			description: "Switch to the previous workspace",
+			suggested_key: {
+				default: "Ctrl+Alt+Left",
+				mac: "Command+Alt+Left",
+			},
+		},
+		"workspace-next": {
+			description: "Switch to the next workspace",
+			suggested_key: {
+				default: "Ctrl+Alt+Right",
+				mac: "Command+Alt+Right",
+			},
+		},
+	},
 	icons: {
 		16: "icons/16.png",
 		19: "icons/19.png",
